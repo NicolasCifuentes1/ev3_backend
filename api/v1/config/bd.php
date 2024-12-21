@@ -1,7 +1,7 @@
 <?php
 function getDbConnection() {
     $host = 'localhost';
-    $db = 'coningenio';
+    $db = 'lachomba';
     $user = 'root';
     $pass = 'Matteo2506';
     $charset = 'utf8mb4';
