@@ -28,7 +28,7 @@ if ($tokenType !== 'Bearer') {
     exit;
 }
 
-// Define tokens for different endpoints
+// Definan los tokens para cada endpoint
 $tokens = [
     'about-us' => 'aboutChomba',
     'contacto-rrss' => 'contactoChomba'
