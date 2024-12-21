@@ -3,7 +3,8 @@ require_once 'config/auth.php';
 require_once 'basicInfo.php';
 require_once 'services.php';
 require_once 'about.php';
-require_once 'contacto-rrss/cotactoController';
+require_once 'contacto-rrss/cotactoController.php';
+require_once 'quienes-somos/quienesController.php'; // Importar funciones de quienes-somos
 
 // Obtener la ruta solicitada
 $requestUri = $_SERVER['REQUEST_URI'];
@@ -26,7 +27,19 @@ if (isset($pathSegments[3])) {
             $data = getServices();
             break;
         case 'about-us':
-            $data = getAbout();
+            $method = $_SERVER['REQUEST_METHOD'];
+            switch ($method) {
+                case 'GET':
+                    $data = getAboutInfo();
+                    break;
+                case 'PUT':
+                    $data = updateAboutInfo();
+                    break;
+                default:
+                    http_response_code(405);
+                    $data = ['error' => 'Method Not Allowed'];
+                    break;
+            }
             break;
         case 'contacto-rrss':
             $method = $_SERVER['REQUEST_METHOD'];
@@ -61,7 +74,7 @@ if (isset($pathSegments[3])) {
     $data = [
         'basic-info' => getBasicInfo(),
         'services' => getServices(),
-        'about-us' => getAbout()
+        'about-us' => getAboutInfo()
     ];
 }
 
