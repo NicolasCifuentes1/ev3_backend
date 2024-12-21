@@ -1,0 +1,30 @@
+// Obtener información básica y actualizar la página
+function cargarInformacionBasica() {
+    fetch('http://localhost:3000/api/v1/informacion-basica')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector(".main-header a").textContent = data.nombreEmpresa;
+            document.querySelector("#banner h1").textContent = data.nombreEmpresa;
+            document.querySelector(".intro-text").textContent = data.descripcion;
+        })
+        .catch(error => console.error("Error al cargar la información básica:", error));
+}
+
+// Modificar información básica (ejemplo con un botón)
+function modificarInformacionBasica() {
+    const nuevaDescripcion = prompt("Ingrese una nueva descripción:");
+    fetch('http://localhost:3000/api/v1/informacion-basica', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ descripcion: nuevaDescripcion })
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            cargarInformacionBasica(); // Recargar datos actualizados
+        })
+        .catch(error => console.error("Error al modificar la información básica:", error));
+}
+
+// Cargar información al cargar la página
+document.addEventListener("DOMContentLoaded", cargarInformacionBasica);
